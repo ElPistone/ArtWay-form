@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="bleu">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Collecte d'infos d'anciens étudiants – 25 ans du Master PSM</title>
+  <meta name="description" content="Formulaire de collecte des projets des anciens étudiants pour les 25 ans du Master PSM.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="assets/img/logo-psm.png">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <div class="hero-wrap">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <img class="logo" src="assets/img/logo-psm.png" alt="PSM – Produits et Services Multimédia" width="104" height="60">
+      <img class="logo" src="assets/img/logo-25ans.png" alt="25 ans du Master PSM" height="60" onerror="this.remove()">
+      <span class="pill"><span class="pill-dot" aria-hidden="true"></span>25 ans · 2001 – 2026</span>
+    </div>
+  </header>
+
+  <section class="hero">
+    <p class="eyebrow">Master PSM · Université Marie et Louis Pasteur</p>
+    <h1>Collecte d'infos d'anciens étudiants</h1>
+    <p class="lead">
+      Dans le cadre du projet SAE M1 PSM, nous développons une application mobile en réalité augmentée
+      comprenant un trombinoscope interactif et une exposition virtuelle des travaux de la formation.
+      Merci de prendre quelques minutes pour alimenter la base de données de l'exposition.
+    </p>
+    <p class="lead small">Les données collectées sont strictement réservées à un usage pédagogique, culturel et non commercial.</p>
+  </section>
+  </div>
+
+  <main>
+    <div class="notice" id="intro" role="note">
+      <strong>Avant de commencer</strong>
+      <ul>
+        <li><strong>Une seule réponse par adresse e-mail.</strong> Une fois envoyé, le formulaire ne pourra plus être modifié ni renvoyé. Vous pourrez tout relire avant l'envoi.</li>
+        <li>Préparez vos fichiers : pour chaque projet, le rapport PDF (idéalement celui de votre Projet de Fin d'Études) et quelques visuels.</li>
+        <li id="deadline-text">Le formulaire est ouvert jusqu'au 10 novembre 2026 inclus.</li>
+      </ul>
+      <p class="small">Les champs marqués <span class="req" aria-hidden="true">*</span> sont obligatoires. Vos réponses écrites sont gardées sur cet appareil si vous fermez la page (pas les fichiers).</p>
+    </div>
+
+    <div id="closed" class="panel closed" hidden>
+      <h2>Le formulaire est clos</h2>
+      <p id="closed-text">La collecte est terminée. Merci pour votre intérêt.</p>
+    </div>
+
+    <!-- Indicateur d'étapes : rempli par app.js -->
+    <nav class="stepper" aria-label="Étapes du formulaire">
+      <p class="stepper-label" id="stepper-label" aria-live="polite"></p>
+      <div class="stepper-bar" aria-hidden="true"><span id="stepper-fill"></span></div>
+      <ol id="stepper-list"></ol>
+    </nav>
+
+    <form id="psm-form" novalidate>
+      <div class="hp" aria-hidden="true">
+        <label for="website">Ne pas remplir</label>
+        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <!-- Étape 1 -->
+      <section class="panel step" data-title="Identité" aria-labelledby="h-step1">
+        <h2 id="h-step1" tabindex="-1">Vos coordonnées</h2>
+        <p class="step-intro">Ces informations servent à vous identifier et à vous envoyer une confirmation.</p>
+
+        <div class="field">
+          <label for="email">Adresse e-mail <span class="req" aria-hidden="true">*</span></label>
+          <div class="control">
+            <input type="email" id="email" name="email" autocomplete="email" required aria-describedby="email-hint email-err">
+          </div>
+          <p class="hint" id="email-hint">Elle n'est jamais affichée dans l'application.</p>
+          <p class="error" id="email-err" data-for="email" role="alert"></p>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="nom">Nom <span class="req" aria-hidden="true">*</span></label>
+            <div class="control"><input type="text" id="nom" name="nom" autocomplete="family-name" maxlength="80" required aria-describedby="nom-err"></div>
+            <p class="error" id="nom-err" data-for="nom" role="alert"></p>
+          </div>
+          <div class="field">
+            <label for="prenom">Prénom <span class="req" aria-hidden="true">*</span></label>
+            <div class="control"><input type="text" id="prenom" name="prenom" autocomplete="given-name" maxlength="80" required aria-describedby="prenom-err"></div>
+            <p class="error" id="prenom-err" data-for="prenom" role="alert"></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Étape 2 -->
+      <section class="panel step" data-title="Parcours" aria-labelledby="h-step2" hidden>
+        <h2 id="h-step2" tabindex="-1">Votre parcours</h2>
+        <p class="step-intro">Choisissez d'abord l'année de votre promotion, puis votre niveau cette année-là.</p>
+
+        <div class="field">
+          <label for="annee">Année de la promotion <span class="req" aria-hidden="true">*</span></label>
+          <div class="control">
+            <select id="annee" name="annee" required aria-describedby="annee-err">
+              <option value="">Choisissez l'année…</option>
+            </select>
+          </div>
+          <p class="error" id="annee-err" data-for="annee" role="alert"></p>
+        </div>
+
+        <div class="field reveal" id="annee-autre-wrap" hidden>
+          <label for="annee_autre">Précisez l'année <span class="req" aria-hidden="true">*</span></label>
+          <div class="control"><input type="text" id="annee_autre" name="annee_autre" maxlength="40" placeholder="ex. 1999-2000" aria-describedby="annee_autre-err"></div>
+          <p class="error" id="annee_autre-err" data-for="annee_autre" role="alert"></p>
+        </div>
+
+        <fieldset class="field reveal" id="niveau-wrap" hidden>
+          <legend>Niveau de formation dans cette promotion <span class="req" aria-hidden="true">*</span></legend>
+          <div class="choices inline">
+            <label class="choice"><input type="radio" name="niveau" value="L3 PSM"> <span><strong>Licence</strong><br><small>L3 PSM</small></span></label>
+            <label class="choice"><input type="radio" name="niveau" value="M1 PSM"> <span><strong>Master 1</strong><br><small>M1 PSM</small></span></label>
+            <label class="choice"><input type="radio" name="niveau" value="M2 PSM"> <span><strong>Master 2</strong><br><small>M2 PSM</small></span></label>
+          </div>
+          <p class="error" data-for="niveau" role="alert"></p>
+        </fieldset>
+
+        <div class="divider"><span>Facultatif</span></div>
+
+        <div class="row">
+          <div class="field">
+            <label for="linkedin">Profil LinkedIn</label>
+            <div class="control"><input type="url" id="linkedin" name="linkedin" placeholder="https://www.linkedin.com/in/…" aria-describedby="linkedin-err"></div>
+            <p class="error" id="linkedin-err" data-for="linkedin" role="alert"></p>
+          </div>
+          <div class="field">
+            <label for="portfolio">Portfolio ou site personnel</label>
+            <div class="control"><input type="url" id="portfolio" name="portfolio" placeholder="https://…" aria-describedby="portfolio-err"></div>
+            <p class="error" id="portfolio-err" data-for="portfolio" role="alert"></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="poste">Intitulé de votre poste actuel</label>
+            <div class="control"><input type="text" id="poste" name="poste" maxlength="120"></div>
+          </div>
+          <div class="field">
+            <label for="entreprise">Entreprise / organisation actuelle</label>
+            <div class="control"><input type="text" id="entreprise" name="entreprise" maxlength="120"></div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Étape 3 -->
+      <section class="panel step" data-title="Projets" aria-labelledby="h-step3" hidden>
+        <h2 id="h-step3" tabindex="-1">Vos projets</h2>
+        <p class="step-intro">
+          Présentez au moins un projet, idéalement votre <strong>Projet de Fin d'Études</strong>. Vous pouvez en ajouter autant que vous le souhaitez.
+          Si vous joignez le rapport PDF, le résumé devient facultatif : nous en extrairons les informations.
+        </p>
+        <div id="projects"></div>
+        <button type="button" class="btn add" id="add-project"><span aria-hidden="true" class="plus">+</span> Ajouter un autre projet</button>
+      </section>
+
+      <!-- Étape 4 -->
+      <section class="panel step" data-title="Autorisations" aria-labelledby="h-step4" hidden>
+        <h2 id="h-step4" tabindex="-1">Autorisations et droit à l'image</h2>
+        <p class="step-intro">Toutes ces autorisations sont nécessaires pour figurer dans l'application. Vous pourrez retirer votre consentement à tout moment en écrivant au contact indiqué ci-dessous.</p>
+        <fieldset class="field">
+          <legend class="sr-only">Autorisations</legend>
+          <label class="choice all"><input type="checkbox" id="auth-all"> <span><strong>Tout accepter</strong></span></label>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" name="auth" value="image">
+              <span>J'autorise l'affichage de mon nom, de ma promotion, de mes informations professionnelles et de ma photo (fournie par l'établissement) dans le trombinoscope de l'application en réalité augmentée (droit à l'image).</span></label>
+            <label class="choice"><input type="checkbox" name="auth" value="exposition">
+              <span>J'autorise la reproduction et la présentation de mes projets (visuels, rendus, extraits du rapport) dans l'exposition virtuelle, à titre gratuit et non commercial.</span></label>
+            <label class="choice"><input type="checkbox" name="auth" value="droits">
+              <span>Je certifie être l'auteur des projets présentés ou avoir l'accord des co-auteurs, et disposer des droits sur les visuels et documents envoyés (pas d'éléments de tiers sans autorisation, pas d'informations confidentielles d'entreprise).</span></label>
+            <label class="choice"><input type="checkbox" name="auth" value="conservation">
+              <span>J'autorise la conservation de mes données et de mes projets pour les futures promotions du Master PSM.</span></label>
+            <label class="choice"><input type="checkbox" name="auth" value="archives">
+              <span>J'autorise l'équipe pédagogique du Master PSM à rechercher, extraire et réutiliser mes projets (rapport, visuels, rendus) conservés dans les archives pédagogiques et serveurs de l'Université Marie et Louis Pasteur.</span></label>
+            <label class="choice"><input type="checkbox" name="auth" value="rgpd">
+              <span>J'ai lu les informations sur la protection des données ci-dessous et j'accepte le traitement de mes données.</span></label>
+          </div>
+          <p class="auth-count" id="auth-count" aria-live="polite"></p>
+          <p class="error" data-for="auth" role="alert"></p>
+        </fieldset>
+
+        <details class="rgpd" id="rgpd">
+          <summary>Protection des données personnelles</summary>
+          <dl>
+            <dt>Responsable du traitement</dt><dd data-rgpd="responsable"></dd>
+            <dt>Organisme</dt><dd data-rgpd="organisme"></dd>
+            <dt>Finalité</dt><dd>Constituer le trombinoscope et l'exposition virtuelle de l'application en réalité augmentée des 25 ans du Master PSM.</dd>
+            <dt>Base légale</dt><dd>Votre consentement, donné via les cases ci-dessus.</dd>
+            <dt>Données collectées</dt><dd>Identité, e-mail, promotion, liens et situation professionnels, projets et fichiers associés. Les photos du trombinoscope sont fournies par l'établissement.</dd>
+            <dt>Destinataires</dt><dd>L'équipe du projet SAE M1 PSM et l'équipe pédagogique du Master PSM. Les fichiers sont stockés sur Google Drive et Google Sheets. Votre e-mail n'est jamais affiché dans l'application.</dd>
+            <dt>Durée de conservation</dt><dd data-rgpd="conservation"></dd>
+            <dt>Vos droits</dt><dd>Vous disposez d'un droit d'accès, de rectification, d'effacement, d'opposition et de retrait de votre consentement. Pour les exercer : <span data-rgpd="contact"></span>. Délégué à la protection des données : <span data-rgpd="dpo"></span>. Vous pouvez aussi saisir la CNIL (cnil.fr).</dd>
+          </dl>
+        </details>
+      </section>
+
+      <!-- Étape 5 -->
+      <section class="panel step" data-title="Récapitulatif" aria-labelledby="h-step5" hidden>
+        <h2 id="h-step5" tabindex="-1">Vérifiez vos réponses</h2>
+        <p class="step-intro">Relisez attentivement : <strong>après l'envoi, plus aucune modification ne sera possible.</strong> Cliquez sur « Modifier » pour corriger une partie.</p>
+        <div id="recap"></div>
+        <div id="progress" class="progress" hidden>
+          <div class="bar"><span id="progress-bar"></span></div>
+          <p id="progress-text" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <p class="error global" id="global-error" role="alert"></p>
+
+      <div class="nav-buttons">
+        <button type="button" class="btn secondary" id="prev"><span aria-hidden="true">←</span> Précédent</button>
+        <button type="submit" class="btn primary" id="next">Suivant <span aria-hidden="true">→</span></button>
+      </div>
+    </form>
+
+    <div id="success" class="panel success" hidden tabindex="-1">
+      <div class="success-icon" aria-hidden="true">✓</div>
+      <h2>Merci, votre réponse est enregistrée !</h2>
+      <p>Un e-mail de confirmation vous a été envoyé. Pour toute modification ou suppression, écrivez à <span data-rgpd="contact"></span>.</p>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </main>
+
+  <footer>
+    <p>Master PSM · Université Marie et Louis Pasteur · Projet SAE M1 PSM</p>
+  </footer>
+
+  <template id="project-template">
+    <article class="project">
+      <header>
+        <h3>Projet <span class="p-num"></span><span class="p-head-title"></span></h3>
+        <button type="button" class="btn danger remove-project">Retirer</button>
+      </header>
+      <div class="field">
+        <label class="p-lbl" data-for="titre">Titre du projet <span class="req" aria-hidden="true">*</span></label>
+        <div class="control"><input type="text" class="p-titre" maxlength="200" required></div>
+        <p class="error p-err-titre" role="alert"></p>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label class="p-lbl" data-for="type">Type de projet <span class="req" aria-hidden="true">*</span></label>
+          <div class="control">
+            <select class="p-type" required>
+              <option value="">Choisissez…</option>
+              <option>Projet de Fin d'Études (PFE)</option>
+              <option>Projet tutoré / SAE</option>
+              <option>Projet de stage / alternance</option>
+              <option>Projet personnel</option>
+              <option>Autre</option>
+            </select>
+          </div>
+          <p class="error p-err-type" role="alert"></p>
+        </div>
+        <div class="field">
+          <label class="p-lbl" data-for="annee">Année de réalisation</label>
+          <div class="control"><input type="text" class="p-annee" maxlength="20" placeholder="ex. 2019"></div>
+        </div>
+      </div>
+      <div class="field">
+        <span class="label">Rapport du projet (PDF)</span>
+        <p class="hint">Fortement recommandé pour le PFE. PDF, 20 Mo maximum.</p>
+        <label class="dropzone small">
+          <input type="file" class="p-rapport" accept="application/pdf">
+          <span class="dz-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 17v-6m-3 3 3-3 3 3"/></svg></span>
+          <span class="dz-text"><strong>Choisir le PDF</strong> ou le glisser ici</span>
+        </label>
+        <ul class="file-list p-rapport-list"></ul>
+        <p class="error p-err-rapport" role="alert"></p>
+      </div>
+      <div class="field">
+        <label class="p-lbl" data-for="resume">Résumé du projet <span class="req p-resume-req" aria-hidden="true">*</span></label>
+        <p class="hint p-resume-hint">Obligatoire si vous ne joignez pas de rapport PDF (50 caractères minimum).</p>
+        <div class="control"><textarea class="p-resume" rows="5" maxlength="2000"></textarea></div>
+        <p class="counter"><span class="p-count">0</span> / 2000</p>
+        <p class="error p-err-resume" role="alert"></p>
+      </div>
+      <div class="field">
+        <span class="label">Visuels / captures d'écran</span>
+        <p class="hint">JPG, PNG ou WEBP. Jusqu'à 5 images de 5 Mo chacune.</p>
+        <label class="dropzone small">
+          <input type="file" class="p-visuels" accept="image/jpeg,image/png,image/webp" multiple>
+          <span class="dz-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m21 16-5-5-9 9"/></svg></span>
+          <span class="dz-text"><strong>Ajouter des images</strong> ou les glisser ici</span>
+        </label>
+        <div class="thumbs p-thumbs"></div>
+        <p class="error p-err-visuels" role="alert"></p>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label class="p-lbl" data-for="equipe">Co-auteurs / membres de l'équipe</label>
+          <div class="control"><input type="text" class="p-equipe" maxlength="300" placeholder="Prénom Nom, Prénom Nom…"></div>
+        </div>
+        <div class="field">
+          <label class="p-lbl" data-for="lien">Lien vers le projet (vidéo, site…)</label>
+          <div class="control"><input type="url" class="p-lien" placeholder="https://…"></div>
+          <p class="error p-err-lien" role="alert"></p>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

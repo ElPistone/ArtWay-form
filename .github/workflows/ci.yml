@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verifier:
+    name: Vérifier le projet
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Vérifications (syntaxe, configuration, secrets, fichiers)
+        run: node .github/scripts/check.mjs
+
+      - name: Validation HTML
+        run: npx --yes html-validate@8.24.1 index.html
+
+  deployer:
+    name: Déployer sur GitHub Pages
+    needs: verifier
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Préparer le site (uniquement les fichiers publics)
+        run: |
+          mkdir -p _site
+          cp -r index.html assets .nojekyll _site/
+          rm -f _site/assets/img/README.md
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

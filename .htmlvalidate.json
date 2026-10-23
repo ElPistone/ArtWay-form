@@ -1,0 +1,25 @@
+{
+  "extends": [
+    "html-validate:recommended"
+  ],
+  "rules": {
+    "no-inline-style": "off",
+    "prefer-native-element": "off",
+    "no-redundant-role": "off",
+    "attribute-boolean-style": "off",
+    "void-style": "off",
+    "long-title": "off",
+    "form-dup-name": [
+      "error",
+      {
+        "shared": [
+          "radio",
+          "checkbox",
+          "button",
+          "reset",
+          "submit"
+        ]
+      }
+    ]
+  }
+}

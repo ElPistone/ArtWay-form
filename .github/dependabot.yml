@@ -1,0 +1,7 @@
+# Met à jour automatiquement les versions des actions GitHub utilisées par la CI.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly

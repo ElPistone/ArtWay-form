@@ -1,0 +1,36 @@
+# Systèmes d'exploitation
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# Éditeurs et IDE
+.vscode/
+.idea/
+*.swp
+*~
+
+# Fichiers temporaires Office (rapports ouverts dans Word, Excel…)
+~$*
+
+# Dépendances, builds et journaux
+node_modules/
+_site/
+*.log
+npm-debug.log*
+
+# Secrets et environnement
+.env
+.env.*
+*.pem
+
+# Archives et sauvegardes
+*.zip
+*.rar
+*.7z
+*.bak
+*.tmp
+
+# Copie en double du guide (la version suivie est docs/DEPLOIEMENT.md)
+/DEPLOIEMENT.md
